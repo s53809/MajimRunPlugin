@@ -9,6 +9,10 @@ public class StartGameEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
     private boolean isCancelled;
 
+    public StartGameEvent() {
+        this.isCancelled = false;
+    }
+
     @Override
     public boolean isCancelled() {
         return this.isCancelled;
