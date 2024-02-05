@@ -10,11 +10,11 @@ public class MajimRunner
         if(instance == null) instance = new MajimRunner();
         return instance;
     }
-    private double mWorldBorderCenterX;
-    private double mWorldBorderCenterZ;
-    private int mWorldBorderSize;
-    private float mGameTime;
-    private float mFeverTime;
+    public double mWorldBorderCenterX;
+    public double mWorldBorderCenterZ;
+    public int mWorldBorderSize;
+    public float mGameTime;
+    public float mFeverTime;
 
     public MajimRunner(){
         mWorldBorderCenterX = 0;
