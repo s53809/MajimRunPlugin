@@ -53,6 +53,8 @@ public class DiamondTracker {
 
         PrintDiamondParticle(new Vector3(1,0,0));
         //#todo : 고쳐지면 매개변수값을 dir로 바꾸기
+
+        //gkgkgkgkgkkgkg
     }
 
     /*
