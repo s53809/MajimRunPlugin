@@ -9,7 +9,6 @@ public class CommandMajimRunSetting implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(strings.length < 1) commandSender.sendMessage("매개변수가 없습니다");
         else{
-            commandSender.sendMessage(strings[0]);
             if(strings[0].equals("help")){
                 commandSender.sendMessage("worldBorderSetting <x좌표> <y좌표> <크기> : 월드보더를 세팅합니다.\n" +
                         "runGame : 마짐런을 시작합니다.\n");
@@ -29,8 +28,10 @@ public class CommandMajimRunSetting implements CommandExecutor {
                 }catch(Exception ex){
                     commandSender.sendMessage(ex.getMessage());
                 }
+                commandSender.sendMessage("월드보더 셋팅 완료");
             }
             if(strings[0].equals("runGame")){
+                commandSender.sendMessage("게임 시작하기");
                 MajimRunner.Ins().StartGame();
             }
         }

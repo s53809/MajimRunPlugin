@@ -13,7 +13,9 @@ import org.bukkit.Bukkit;
 public class WorldBorderSetting implements Listener{
 
     @EventHandler
-    public void WorldBorderSetting(StartGameEvent event){
+    public void OnWorldBorderEvent(StartGameEvent event){
+        Bukkit.broadcastMessage("월드보더 셋팅 함수 호출 완료");
+
         WorldBorder wb = Bukkit.getWorld("world").getWorldBorder();
         wb.setCenter(MajimRunner.Ins().mWorldBorderCenterX, MajimRunner.Ins().mWorldBorderCenterZ);
         wb.setSize(MajimRunner.Ins().mWorldBorderSize);
