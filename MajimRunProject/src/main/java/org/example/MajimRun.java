@@ -18,6 +18,7 @@ public class MajimRun extends JavaPlugin {
         this.getCommand("setMajim").setExecutor(new CommandSetMajim());
         this.getCommand("majimRunSetting").setExecutor(new CommandMajimRunSetting());
         getServer().getPluginManager().registerEvents(new EventListener(), this);
+        getServer().getPluginManager().registerEvents(new EventListener(), this);
     }
 
     @Override
