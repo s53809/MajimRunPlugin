@@ -20,12 +20,16 @@ public class DiamondTracker {
 
     private void PrintDiamondParticle(Vector3 dir){
         //#todo : 파티클 구현하기
-        for(float i = 0;i<=1.0f;i+=0.1f){
+        for(float i = 0;i<=3.0f;i+=0.3f){
             myWorld.spawnParticle(Particle.SOUL_FIRE_FLAME,
                     myPlayer.getLocation().getX() + (dir.x * i),
-                    myPlayer.getLocation().getY() + (dir.y * i),
+                    myPlayer.getLocation().getY() + 2 + (dir.y * i),
                     myPlayer.getLocation().getZ() + (dir.z * i),
-                    1
+                    1,
+                    0,
+                    0,
+                    0,
+                    0
                     );
         }
     }
