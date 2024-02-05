@@ -31,10 +31,12 @@ public class MajimRunner
     }
 
     public void StartGame(){
+        Bukkit.broadcastMessage("Start Game 실행 완료");
+
         StartGameEvent event = new StartGameEvent();
 
         Bukkit.getPluginManager().callEvent(event);
-        if(event.isCancelled()){
+        if(!event.isCancelled()){
             event.setCancelled(true);
         }
     }
