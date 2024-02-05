@@ -1,0 +1,15 @@
+name: MajimRun
+version: 1.0
+author: Minseo Kim
+main: org.example.MajimRun
+api-version: 1.20
+
+commands:
+  minseo:
+    description: this is minseo command
+    usage: /<command>
+  setMajim:
+    description: this is set majim command
+    usage: /<command> <playerName>
+  majimRunSetting:
+    description: this is MajimRun Setting command
