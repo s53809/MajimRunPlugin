@@ -31,9 +31,11 @@ public class MajimRunner
     }
 
     public void StartGame(){
-        Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),
-                "worldborder center " + mWorldBorderCenterX + " " + mWorldBorderCenterZ);
-        Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(),
-                "worldborder set " + mWorldBorderSize + " 2");
+        StartGameEvent event = new StartGameEvent();
+
+        Bukkit.getPluginManager().callEvent(event);
+        if(event.isCancelled()){
+            event.setCancelled(true);
+        }
     }
 }
