@@ -13,3 +13,6 @@ commands:
     usage: /<command> <playerName>
   majimRunSetting:
     description: this is MajimRun Setting command
+  timer:
+    description: start a custom timer
+    usage: /<command>
