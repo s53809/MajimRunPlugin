@@ -63,6 +63,10 @@ public class MajimTracker implements Listener {
                 if(!ev.isCancelled()){
                     ev.setCancelled(true);
                 }
+
+                Title.sendTitleAll("마짐이 사망하였습니다 추격자의 승리!",
+                        player.getLastDamageCause().getEntity().getName() + "의 막타!",
+                        1, 50, 1);
             }
             event.setCancelled(false);
             player.playEffect(EntityEffect.TOTEM_RESURRECT);

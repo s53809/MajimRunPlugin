@@ -24,4 +24,23 @@ public class Title {
     public static void sendActionBarAll(String text){
         sendActionBar((List<Player>) Bukkit.getOnlinePlayers(), text);
     }
+
+    public static void sendTitle(Player player, String title, String subTitle, int fadeInTime, int stayTime, int fadeOutTime){
+        player.sendTitle(title, subTitle, fadeInTime, stayTime, fadeOutTime);
+    }
+
+    public static void sendTitle(Player player, String title, int fadeInTime, int stayTime, int fadeOutTime){
+        player.sendTitle(title, "", fadeInTime, stayTime, fadeOutTime);
+    }
+
+    public static void sendTitle(List<Player> players, String title, String subTitle, int fadeInTime, int stayTime, int fadeOutTime){
+        for(Player player : players){
+            player.sendTitle(title, subTitle, fadeInTime, stayTime, fadeOutTime);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void sendTitleAll(String title, String subTitle, int fadeInTime, int stayTime, int fadeOutTime){
+        sendTitle((List<Player>) Bukkit.getOnlinePlayers(), title, subTitle, fadeInTime, stayTime, fadeOutTime);
+    }
 }
