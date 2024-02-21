@@ -37,6 +37,7 @@ public class MajimRunner
         }
         Bukkit.broadcastMessage("마짐런을 시작합니다!");
         MajimHandler.Ins().isSaigonoTime = false;
+        MajimHandler.Ins().isGameStart = true;
 
         StartGameEvent event = new StartGameEvent();
 

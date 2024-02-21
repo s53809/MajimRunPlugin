@@ -6,7 +6,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class MajimRun extends JavaPlugin {
-
+    private static MajimRun instance;
+    public static MajimRun Ins() {
+        return instance;
+    }
     public static void main(String[] args) {
 
     }

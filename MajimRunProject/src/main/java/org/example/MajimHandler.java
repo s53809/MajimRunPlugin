@@ -22,4 +22,5 @@ public class MajimHandler {
     }
 
     public boolean isSaigonoTime = false;
+    public boolean isGameStart = false;
 }

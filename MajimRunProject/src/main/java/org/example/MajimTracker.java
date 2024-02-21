@@ -10,6 +10,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -58,25 +61,24 @@ public class MajimTracker implements Listener {
 
     @EventHandler
     public void PlayerDeadEvent(EntityResurrectEvent event){
-        if(event.getEntityType() == EntityType.PLAYER){
+        if(event.getEntityType() == EntityType.PLAYER && MajimHandler.Ins().isGameStart){
             Player player = (Player)event.getEntity();
-            if(player == MajimHandler.Ins().GetMajim()){
+            event.setCancelled(false);
+            player.playEffect(EntityEffect.TOTEM_RESURRECT);
+            if(player == MajimHandler.Ins().GetMajim() && event.getEntity().getKiller() != null && event.getEntity().getKiller() != player){
                 EndGameEvent ev = new EndGameEvent();
 
                 Bukkit.getPluginManager().callEvent(ev);
                 if(!ev.isCancelled()){
                     ev.setCancelled(true);
                 }
-                player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20 * 60, 100));
-                Title.sendTitleAll("마짐이 사망하였습니다 추격자의 승리!",
-                        player.getLastDamageCause().getEntity().getName() + "의 막타!",
-                        1, 50, 1);
+                Title.sendTitleAll("추격자의 승리!",
+                        event.getEntity().getKiller().getName() + "의 막타!",
+                        20 * 1, 20 * 5, 20 * 1);
             }
             else{
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 60, 100));
+
             }
-            event.setCancelled(false);
-            player.playEffect(EntityEffect.TOTEM_RESURRECT);
         }
     }
 }
