@@ -55,7 +55,7 @@ public class DiamondTracker {
 
         Vector3 dir = GetPlayerDirection(myVec, targetVec);
 
-        PrintDiamondParticle(new Vector3(1,0,0));
+        PrintDiamondParticle(dir);
         //#todo : 고쳐지면 매개변수값을 dir로 바꾸기
 
         //gkgkgkgkgkkgkg

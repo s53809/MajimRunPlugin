@@ -10,6 +10,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
 import java.util.List;
 
 public class MajimTracker implements Listener {
@@ -44,7 +48,7 @@ public class MajimTracker implements Listener {
 
     @EventHandler
     public void PlayerWalkEvent(PlayerMoveEvent event){
-        if(!isGameStart) return;
+        if(!isGameStart || !MajimHandler.Ins().isSaigonoTime) return;
         
         Title.sendActionBarAll("마짐의 좌표 : " +
                 (int)majim.getLocation().getX() + " " +
@@ -63,10 +67,13 @@ public class MajimTracker implements Listener {
                 if(!ev.isCancelled()){
                     ev.setCancelled(true);
                 }
-
+                player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20 * 60, 100));
                 Title.sendTitleAll("마짐이 사망하였습니다 추격자의 승리!",
                         player.getLastDamageCause().getEntity().getName() + "의 막타!",
                         1, 50, 1);
+            }
+            else{
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 60, 100));
             }
             event.setCancelled(false);
             player.playEffect(EntityEffect.TOTEM_RESURRECT);
