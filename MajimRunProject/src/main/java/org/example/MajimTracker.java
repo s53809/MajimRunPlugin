@@ -21,7 +21,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 
 public class MajimTracker implements Listener {
-
     Player majim;
     boolean isGameStart = false;
     @EventHandler
@@ -78,7 +77,10 @@ public class MajimTracker implements Listener {
                         20 * 1, 20 * 5, 20 * 1);
             }
             else{
-                MajimRun.Ins().BongIn(player, 1);
+                new DelayedTask(() ->{
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 60, 249));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20 * 60, 249));
+                }, 20);
             }
         }
     }

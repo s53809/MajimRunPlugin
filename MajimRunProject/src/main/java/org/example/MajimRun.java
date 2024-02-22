@@ -28,6 +28,7 @@ public class MajimRun extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EventListener(), this);
         getServer().getPluginManager().registerEvents(new WorldBorderSetting(), this);
         getServer().getPluginManager().registerEvents(new MajimTracker(), this);
+        getServer().getPluginManager().registerEvents(new DelayedTask(this), this);
     }
 
     @Override
@@ -35,13 +36,14 @@ public class MajimRun extends JavaPlugin {
         getLogger().info("OnDisable is called");
     }
 
-    public void BongIn(Player player, int second){
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable(){
-            public void run(){
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 60, 249));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20 * 60, 249));
-            }
-        }, second * 20);
+    public void BongIn(Player player, long second){
+        try{
+            Thread.sleep(1000 * second);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 60, 249));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20 * 60, 249));
+        }catch(InterruptedException e){
+
+        }
     }
 }
 
