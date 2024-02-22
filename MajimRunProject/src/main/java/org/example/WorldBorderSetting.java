@@ -19,6 +19,7 @@ public class WorldBorderSetting implements Listener{
         wb.setSize(MajimRunner.Ins().mWorldBorderSize);
     }
 
+    @EventHandler
     public void OffWorldBorderEvent(EndGameEvent event){
         WorldBorder wb = Bukkit.getWorld("world").getWorldBorder();
         MajimHandler.Ins().isGameStart = false;

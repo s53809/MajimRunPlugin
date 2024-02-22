@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class MajimTracker implements Listener {
     @EventHandler
     public void PlayerWalkEvent(PlayerMoveEvent event){
         if(!isGameStart || !MajimHandler.Ins().isSaigonoTime) return;
-        
+
         Title.sendActionBarAll("마짐의 좌표 : " +
                 (int)majim.getLocation().getX() + " " +
                 (int)majim.getLocation().getY() + " " +
@@ -77,7 +78,7 @@ public class MajimTracker implements Listener {
                         20 * 1, 20 * 5, 20 * 1);
             }
             else{
-
+                MajimRun.Ins().BongIn(player, 1);
             }
         }
     }
