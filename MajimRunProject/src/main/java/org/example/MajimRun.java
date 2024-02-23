@@ -10,6 +10,9 @@ import org.bukkit.potion.PotionEffectType;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class MajimRun extends JavaPlugin {
+
+    public int timer = 5*60;
+    public int lastTime = 1*60;
     private static MajimRun instance;
     public static MajimRun Ins() {
         return instance;
@@ -27,8 +30,10 @@ public class MajimRun extends JavaPlugin {
         this.getCommand("timer").setExecutor(new CommandTimer());
         getServer().getPluginManager().registerEvents(new EventListener(), this);
         getServer().getPluginManager().registerEvents(new WorldBorderSetting(), this);
+        getServer().getPluginManager().registerEvents(new CommandTimer(), this);
         getServer().getPluginManager().registerEvents(new MajimTracker(), this);
         getServer().getPluginManager().registerEvents(new DelayedTask(this), this);
+
     }
 
     @Override
