@@ -20,6 +20,7 @@ public class MajimRun extends JavaPlugin {
         this.getCommand("timer").setExecutor(new CommandTimer());
         getServer().getPluginManager().registerEvents(new EventListener(), this);
         getServer().getPluginManager().registerEvents(new WorldBorderSetting(), this);
+        getServer().getPluginManager().registerEvents(new CommandTimer(), this);
     }
 
     @Override

@@ -1,33 +1,141 @@
 package org.example;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.Bukkit;
+import org.bukkit.command.TabExecutor;
+import org.bukkit.event.EventHandler;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.NamespacedKey;
+import org.bukkit.event.Listener;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class CommandTimer implements CommandExecutor {
+public class CommandTimer implements TabExecutor, Listener {
     private final MajimRun plugin = MajimRun.getPlugin(MajimRun.class);
 
     private final String key = "CommandTimer";
     private final NamespacedKey namespacedKey = new NamespacedKey(plugin, key);
 
+    private int timer = 5*60;
+    private int lastTime = 1*60;
+    private int tempTimer;
+
+    private BukkitTask task;
+
+    public void setTimer(int time)
+    {
+        timer = time;
+    }
+
+    private final KeyedBossBar bar = Bukkit.createBossBar(namespacedKey, ChatColor.RED + key, BarColor.RED, BarStyle.SOLID);
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Bukkit.createBossBar(namespacedKey, key, BarColor.RED, BarStyle.SOLID);
+        if(args.length < 1) sender.sendMessage("매개변수가 없습니다");
+        else if(args.length == 3) {
+            if (args[0].equals("time")) {
+                if (args[1].equals("set")) {
+                    int time = 0;
 
-        Bukkit.broadcastMessage("Started");
-        BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
-        scheduler.runTaskTimer(plugin,() -> {
-            Bukkit.broadcastMessage("Mooooo!");
-            }, 20L * 10L, 20L*5L);
+                    try {
+                        time = Integer.parseInt(args[2]);
+                        sender.sendMessage("commandSuccessed");
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage("commandFailed");
+                        return false;
+                    }
+                    sender.sendMessage(Integer.toString(time));
 
+                    setTimer(time);
+                    sender.sendMessage(Integer.toString(timer));
+                    return true;
+                }
+            } else if (args[0].equals("lastTime")) {
+                if (args[1].equals("set")) {
+                    int time = 0;
+
+                    try {
+                        time = Integer.parseInt(args[2]);
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                    lastTime = time;
+                    return true;
+                }
+            }
+        }
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> list = new ArrayList<>();
+        if(sender instanceof Player)
+        {
+            if (args.length == 1) {
+                list.add("time");
+                list.add("fianltime");
+                Collections.sort(list);
+                return list;
+            } else if (args.length == 2) {
+                List<String> arguments = new ArrayList<>();
+                arguments.add("set");
+                Collections.sort(arguments);
+                return arguments;
+            }
+
+        }
+        return null;
+    }
+
+    @EventHandler
+    public void OnStartGameEvent(StartGameEvent event)
+    {
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
+            // TODO: Check facing direction
+            bar.addPlayer(player);
+        }
+        if(task != null)
+        {
+            task.cancel();
+        }
+        Bukkit.broadcastMessage("Started");
+        Bukkit.broadcastMessage(Integer.toString(timer));
+        tempTimer = timer + 1;
+        task = new BukkitRunnable() {
+            @Override
+            public void run() {
+                tempTimer -= 1;
+                bar.setTitle(Integer.toString(tempTimer/60) + " : " + Integer.toString(tempTimer%60));
+                bar.setProgress((float)tempTimer/timer);
+                if(bar.getProgress() > (float)lastTime/(float)timer)
+                {
+                    bar.setColor(BarColor.GREEN);
+                } else
+                {
+                    bar.setColor(BarColor.RED);
+                }
+                Bukkit.broadcastMessage(Integer.toString(tempTimer));
+                if(tempTimer == 0)
+                {
+                    this.cancel();
+                    bar.removeAll();
+                    return;
+                }
+            }
+        }.runTaskTimer(plugin, 0L, 20L);
     }
 }
