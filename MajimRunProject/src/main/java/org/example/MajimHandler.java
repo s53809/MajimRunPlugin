@@ -20,4 +20,7 @@ public class MajimHandler {
         if(majim == null) return null;
         else return majim;
     }
+
+    public boolean isSaigonoTime = false;
+    public boolean isGameStart = false;
 }

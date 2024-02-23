@@ -31,7 +31,13 @@ public class MajimRunner
     }
 
     public void StartGame(){
-        Bukkit.broadcastMessage("Start Game 실행 완료");
+        if(MajimHandler.Ins().GetMajim() == null){
+            Bukkit.broadcastMessage("마짐 설정이 안되어있어 게임 시작을 하지 못합니다.");
+            return;
+        }
+        Bukkit.broadcastMessage("마짐런을 시작합니다!");
+        MajimHandler.Ins().isSaigonoTime = false;
+        MajimHandler.Ins().isGameStart = true;
 
         StartGameEvent event = new StartGameEvent();
 
