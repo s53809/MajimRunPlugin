@@ -1,0 +1,21 @@
+diff a/MajimRunProject/src/main/java/org/example/MajimTracker.java b/MajimRunProject/src/main/java/org/example/MajimTracker.java	(rejected hunks)
+@@ -78,9 +78,18 @@
+             }
+             else{
+                 new DelayedTask(() ->{
++                    player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
++                    player.removePotionEffect(PotionEffectType.REGENERATION);
++                    player.removePotionEffect(PotionEffectType.ABSORPTION);
++                    Title.sendTitle(player, "사망하셨습니다!",
++                            "1분 동안 구속 및 실명 효과가 적용됩니다.",
++                            20 * 1, 20 * 5, 20 * 1);
++                    player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 249));
++                    player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 20, 249));
+                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 60, 249));
+                     player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20 * 60, 249));
+-                }, 20);
++                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 60, 249));
++                }, 5);
+             }
+         }
+     }
