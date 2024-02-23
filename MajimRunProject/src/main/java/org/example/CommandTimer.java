@@ -29,17 +29,9 @@ public class CommandTimer implements TabExecutor, Listener {
 
     private final String key = "CommandTimer";
     private final NamespacedKey namespacedKey = new NamespacedKey(plugin, key);
-
-    private int timer = 5*60;
-    private int lastTime = 1*60;
     private int tempTimer;
 
     private BukkitTask task;
-
-    public void setTimer(int time)
-    {
-        timer = time;
-    }
 
     private final KeyedBossBar bar = Bukkit.createBossBar(namespacedKey, ChatColor.RED + key, BarColor.RED, BarStyle.SOLID);
     @Override
@@ -57,10 +49,7 @@ public class CommandTimer implements TabExecutor, Listener {
                         sender.sendMessage("commandFailed");
                         return false;
                     }
-                    sender.sendMessage(Integer.toString(time));
-
-                    setTimer(time);
-                    sender.sendMessage(Integer.toString(timer));
+                    plugin.timer = time;
                     return true;
                 }
             } else if (args[0].equals("lastTime")) {
@@ -72,7 +61,7 @@ public class CommandTimer implements TabExecutor, Listener {
                     } catch (NumberFormatException e) {
                         return false;
                     }
-                    lastTime = time;
+                    plugin.lastTime = time;
                     return true;
                 }
             }
@@ -87,7 +76,7 @@ public class CommandTimer implements TabExecutor, Listener {
         {
             if (args.length == 1) {
                 list.add("time");
-                list.add("fianltime");
+                list.add("lastTime");
                 Collections.sort(list);
                 return list;
             } else if (args.length == 2) {
@@ -112,27 +101,30 @@ public class CommandTimer implements TabExecutor, Listener {
         {
             task.cancel();
         }
-        Bukkit.broadcastMessage("Started");
-        Bukkit.broadcastMessage(Integer.toString(timer));
-        tempTimer = timer + 1;
+        //Bukkit.broadcastMessage("Started");
+        //Bukkit.broadcastMessage(Integer.toString(timer));
+        tempTimer = plugin.timer + 1;
         task = new BukkitRunnable() {
             @Override
             public void run() {
                 tempTimer -= 1;
                 bar.setTitle(Integer.toString(tempTimer/60) + " : " + Integer.toString(tempTimer%60));
-                bar.setProgress((float)tempTimer/timer);
-                if(bar.getProgress() > (float)lastTime/(float)timer)
+                bar.setProgress((float)tempTimer/plugin.timer);
+                if(bar.getProgress() > (float)plugin.lastTime/(float)plugin.timer)
                 {
                     bar.setColor(BarColor.GREEN);
-                } else
-                {
+                } else if(plugin.lastTime == tempTimer){
+                    bar.setColor(BarColor.RED);
+                    Bukkit.broadcastMessage("lastTime");
+                }
+                else {
                     bar.setColor(BarColor.RED);
                 }
-                Bukkit.broadcastMessage(Integer.toString(tempTimer));
                 if(tempTimer == 0)
                 {
                     this.cancel();
                     bar.removeAll();
+                    Bukkit.broadcastMessage("GameEnd");
                     return;
                 }
             }

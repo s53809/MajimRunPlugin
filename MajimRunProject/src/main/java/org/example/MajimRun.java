@@ -7,6 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class MajimRun extends JavaPlugin {
 
+    public int timer = 5*60;
+    public int lastTime = 1*60;
+
     public static void main(String[] args) {
 
     }
