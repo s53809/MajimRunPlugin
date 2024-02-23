@@ -115,7 +115,7 @@ public class CommandTimer implements TabExecutor, Listener {
                     bar.setColor(BarColor.GREEN);
                 } else if(plugin.lastTime == tempTimer){
                     bar.setColor(BarColor.RED);
-                    Bukkit.broadcastMessage("lastTime");
+                    MajimHandler.Ins().isSaigonoTime = true;
                 }
                 else {
                     bar.setColor(BarColor.RED);
@@ -124,7 +124,15 @@ public class CommandTimer implements TabExecutor, Listener {
                 {
                     this.cancel();
                     bar.removeAll();
-                    Bukkit.broadcastMessage("GameEnd");
+                    EndGameEvent ev = new EndGameEvent();
+
+                    Bukkit.getPluginManager().callEvent(ev);
+                    if(!ev.isCancelled()){
+                        ev.setCancelled(true);
+                    }
+                    Title.sendTitleAll("마짐의 승리!",
+                            "마짐이 끝까지 버텼습니다!!",
+                            20 * 1, 20 * 5, 20 * 1);
                     return;
                 }
             }
